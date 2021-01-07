@@ -21,7 +21,7 @@ class DataJson {
 
   DataJson.formJson(Map<String, dynamic> json):
   this.coord = Coord.fromJson(json['coord']),
-  this.weather = Weather.fromJson(json['weather']),
+  this.weather = Weather.fromJson(json['weather'][0]),
   this.base = json['base'],
   this.mainWeather = MainWeather.fromJson(json['main']),
   this.visibility = json['visibility'],

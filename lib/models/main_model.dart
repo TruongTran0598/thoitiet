@@ -3,16 +3,16 @@ class MainWeather {
   final double feels_like;
   final double temp_min;
   final double temp_max;
-  final int pressure;
-  final int humidity;
+  final double pressure;
+  final double humidity;
 
   MainWeather.fromJson(Map<String, dynamic> json):
-  this.temp = json['temp'],
-  this.feels_like = json['feel_like'],
-  this.temp_min = json['temp_min'],
-  this.temp_max = json['temp_max'],
-  this.pressure = json['pressure'],
-  this.humidity = json['humidity'];
+  this.temp = (json['temp']).toDouble(),
+  this.feels_like = json['feels_like'],
+  this.temp_min = json['temp_min'].toDouble(),
+  this.temp_max = json['temp_max'].toDouble(),
+  this.pressure = json['pressure'].toDouble(),
+  this.humidity = json['humidity'].toDouble();
 
   Map<String, dynamic> toJson() => {
     'temp' : this.temp,

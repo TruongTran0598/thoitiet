@@ -1,9 +1,9 @@
 class Wind {
-  final int speed;
+  final double speed;
   final int deg;
 
   Wind.fromJson(Map<String, dynamic> json):
-  this.speed = json['speed'],
+  this.speed = (json['speed']).toDouble(),
   this.deg = json['deg'];
 
   Map<String, dynamic> toJson() => {
