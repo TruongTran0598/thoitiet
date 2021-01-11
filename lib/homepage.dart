@@ -13,70 +13,74 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageScreen extends State<HomePage>{
-  bool isLoading = false;
+  bool isLoading = true;
   DataJson dataJson;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPersistentFrameCallback((_) async {
-      setState(() {
-        return isLoading = true;
-      });
-      DataJson valueData = await Api().getInformationWeatherInHanoi(
+  void _getWeatherData() async {
+    DataJson valueData = await Api().getInformationWeatherInHanoi(
         onError: (msg) {
           setState(() {
             isLoading = false;
             print(msg);
           });
         }
-      );
-      setState(() {
-        isLoading = false;
-        dataJson = valueData;
-      });
+    );
+    setState(() {
+      isLoading = false;
+      dataJson = valueData;
     });
+  }
+
+  @override
+  void initState() {
+    // this.mounted = true
+    super.initState();
+    _getWeatherData();
+  }
+
+  Widget _renderContent() {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/duong.jpg"),
+              fit: BoxFit.cover,
+            )
+        ),
+        child: Column(
+          children: <Widget> [
+            MainInforWeather(
+              tempValue: "${dataJson.mainWeather.temp}",
+              descriptionWeatherValues: "${dataJson.weather.description_weather}",
+              tempMinValue: "${dataJson.mainWeather.temp_min}",
+              tempMaxValue: "${dataJson.mainWeather.temp_max}",
+              feelsLikeValue: "${dataJson.mainWeather.feels_like}",
+            ),
+            MoreInforWeather(
+              minutesUpdateValue: "${DateTime.fromMillisecondsSinceEpoch(dataJson.dt*1000).minute}",
+              speedWindValue: "${dataJson.wind.speed}",
+              humidityValue: "${dataJson.mainWeather.humidity}",
+              visibilityValue: "${dataJson.visibility/1000}",
+              pressureValue: "${dataJson.mainWeather.pressure}",
+              percentCloudValue: "${dataJson.clouds.all}",
+              sunriseValue: "${DateTime.fromMillisecondsSinceEpoch(dataJson.sysWeather.sunrise*1000).hour}",
+              sunsetValue: "${DateTime.fromMillisecondsSinceEpoch(dataJson.sysWeather.sunset*1000).hour}",
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppbarScreen(),
-        body: isLoading ? Center(
-          child: Text("Loading......"),
-        ) : (dataJson == null) ? Center(
-          child: Text("Data is empty!!!!"),
-        ) : Center(
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/duong.jpg"),
-                  fit: BoxFit.cover,
-                )
-            ),
-            child: Column(
-              children: <Widget> [
-                MainInforWeather(
-                  tempValue: "${dataJson.mainWeather.temp}",
-                  descriptionWeatherValues: "${dataJson.weather.description_weather}",
-                  tempMinValue: "${dataJson.mainWeather.temp_min}",
-                  tempMaxValue: "${dataJson.mainWeather.temp_max}",
-                  feelsLikeValue: "${dataJson.mainWeather.feels_like}",
-                ),
-                MoreInforWeather(
-                  minutesUpdateValue: "${DateTime.fromMillisecondsSinceEpoch(dataJson.dt).minute}",
-                  speedWindValue: "${dataJson.wind.speed}",
-                  humidityValue: "${dataJson.mainWeather.humidity}",
-                  visibilityValue: "${dataJson.visibility/1000}",
-                  pressureValue: "${dataJson.mainWeather.pressure}",
-                  percentCloudValue: "${dataJson.clouds.all}",
-                  sunriseValue: "${DateTime.fromMicrosecondsSinceEpoch(dataJson.sysWeather.sunrise).hour}",
-                  sunsetValue: "${DateTime.fromMicrosecondsSinceEpoch(dataJson.sysWeather.sunset).hour}",
-                ),
-              ],
-            ),
-          ),
-        )
+      appBar: AppbarWidget(),
+      body: isLoading ? Center(
+        child: CircularProgressIndicator(),
+      ) : (dataJson == null) ? Center(
+        child: Text("Data is empty!!!!"),
+      ) : _renderContent()
     );
   }
 }

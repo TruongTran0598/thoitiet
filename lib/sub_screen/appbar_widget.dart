@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-AppBar AppbarScreen () {
+AppBar AppbarWidget () {
   return AppBar(
     backgroundColor: Colors.pink[100].withOpacity(0.5),
     elevation: 0,
