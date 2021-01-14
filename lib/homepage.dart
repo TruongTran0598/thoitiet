@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
 import 'package:flutter_app/models/data_json.dart';
-import 'package:flutter_app/sub_screen/appbar_widget.dart';
-import 'package:flutter_app/sub_screen/main_infor_weather.dart';
-import 'package:flutter_app/sub_screen/more_infor_weather.dart';
+import 'package:flutter_app/sub_widget/appbar_widget.dart';
+import 'package:flutter_app/sub_widget/main_infor_weather.dart';
+import 'package:flutter_app/sub_widget/more_infor_weather.dart';
 
 class HomePage extends StatefulWidget{
   @override

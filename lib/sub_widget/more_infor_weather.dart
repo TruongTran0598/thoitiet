@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/sub_screen/rec_information.dart';
+import 'package:flutter_app/sub_widget/rec_information.dart';
 
 class MoreInforWeather extends StatelessWidget{
   final String minutesUpdateValue;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'location_choice.dart';
+
 AppBar AppbarWidget () {
   return AppBar(
     backgroundColor: Colors.pink[100].withOpacity(0.5),
@@ -14,14 +16,7 @@ AppBar AppbarWidget () {
       },
     ),
     title: Center(
-      child: Text(
-        "Hà Nội",
-        style: TextStyle(
-            fontSize: 23,
-            color: Colors.black,
-            fontWeight: FontWeight.w400
-        ),
-      ),
+      child: LocationChoice(),
     ),
     actions: [
       IconButton(
@@ -36,3 +31,4 @@ AppBar AppbarWidget () {
     ],
   );
 }
+
